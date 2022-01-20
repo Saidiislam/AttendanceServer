@@ -130,7 +130,6 @@ exports.updateUserProfile =asyncHandler( async(req,res)=>{
     const user = await User.findById(req.user._id);
     if(user){
         user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
         if(req.body.password){
             user.password = req.body.password
         }
@@ -138,7 +137,6 @@ exports.updateUserProfile =asyncHandler( async(req,res)=>{
         res.json({
             _id: updateUser._id,
             name: updateUser.name,
-            email: updateUser.email,
             isAdmin: updateUser.isAdmin,
             token: generateToken(updateUser._id)
         })
@@ -183,13 +181,11 @@ exports.updateUser = asyncHandler(async (req, res) =>{
     const user = await User.findById(req.params.id)
     if(user){
         user.name = req.body.name || user.name
-        user.email = req.body.email || user.email
         user.isAdmin = req.body.isAdmin;
         const updateUser = await user.save();
         res.json({
             _id: updateUser._id,
             name: updateUser.name,
-            email: updateUser.email,
             isAdmin: updateUser.isAdmin,
         })
     }else{
