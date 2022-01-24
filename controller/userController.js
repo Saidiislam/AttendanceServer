@@ -83,7 +83,7 @@ exports.registerUser =asyncHandler( async (req,res) =>{
     // console.log(activetion_token)
     const url = `${process.env.CLIENT_URL}/#/user/activate/${activetion_token}`
     // console.log(url)
-    sendEmail(email, url, "Verify your Mail address");
+    sendEmail(email, url, "Verify your Mail address",);
     res.json({msg: "Register Success! Please activate your email to start."})
     // const user = await User.create({name, email, password});
     // if(user){
@@ -137,6 +137,7 @@ exports.updateUserProfile =asyncHandler( async(req,res)=>{
         res.json({
             _id: updateUser._id,
             name: updateUser.name,
+            email:updateUser.email,
             isAdmin: updateUser.isAdmin,
             token: generateToken(updateUser._id)
         })

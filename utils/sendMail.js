@@ -35,6 +35,7 @@ const sendEmail = (to, url, txt) => {
         `
       };
       
+      
       transporter.sendMail(details, (err) =>{
         if(err){
             console.log(err)
@@ -42,6 +43,7 @@ const sendEmail = (to, url, txt) => {
             console.log("email sent sucessfully");
         }
       })
+
     };
     
 module.exports = sendEmail;
