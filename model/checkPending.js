@@ -24,15 +24,12 @@ const checkPending = mongoose.Schema({
     },
     lati:{
         type:Number,
-        required: true,
     },
     long:{
         type:Number,
-        required: true,
     },
     placedata:{
         type:String,
-        required:true,
     },
 }, {
     timestamps: true

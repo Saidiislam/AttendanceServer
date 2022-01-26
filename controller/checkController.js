@@ -45,7 +45,8 @@ exports.getAllUsersForOptions =asyncHandler( async (req, res)=>{
     const data = users.map(user => {
         const id = user._id;
         const name = user.name
-        return {id,name};
+        const barCode = user.ranNum
+        return {id, name, barCode};
     })
     // console.log(data);
     res.json(data);

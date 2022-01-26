@@ -14,7 +14,8 @@ exports.loginUser = asyncHandler(async (req, res) =>{
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            token: generateToken(user._id)
+            token: generateToken(user._id),
+            barCode: user.ranNum
         })
     }
 })
@@ -60,7 +61,7 @@ exports.getUserProfile =asyncHandler( async (req, res) =>{
 
 
 exports.registerUser =asyncHandler( async (req,res) =>{
-    const {name, email, password } = req.body;
+    const {name, email, password, ranNum } = req.body;
     if(!name || !email || !password){
         res.status(400)
         throw new Error("Please fill in all fields");
@@ -76,7 +77,7 @@ exports.registerUser =asyncHandler( async (req,res) =>{
     // const passwordHash = await bcrypt.hash(password, 12);
 
     const newUser = {
-        name, email, password
+        name, email, password, ranNum
     }
     // console.log(newUser)
     const activetion_token = createActivationToken(newUser)
@@ -101,21 +102,22 @@ exports.registerUser =asyncHandler( async (req,res) =>{
 exports.activeEmail = asyncHandler( async(req, res) =>{
     const {activetion_token} = req.body
     const user = jwt.verify(activetion_token, process.env.JWT_SECRET)
-    const {name, email, password} = user;
+    const {name, email, password, ranNum} = user;
     // console.log(name,email, password)
     const userExists = await User.findOne({email});
         if(userExists){
             res.status(400);
             throw new Error("User already exists");
         };
-    const resUser = await User.create({name, email, password});
+    const resUser = await User.create({name, email, password, ranNum});
         if(resUser){
             res.status(201).json({
                 _id : resUser._id,
                 name : resUser.name,
                 email: resUser.email,
                 isAdmin: resUser.isAdmin,
-                token: generateToken(resUser._id)
+                token: generateToken(resUser._id),
+                barCode: resUser.ranNum
             })
         }
 }
