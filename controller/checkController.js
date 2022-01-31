@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../model/userModel');
 const CheckIn = require('../model/checkModel');
+const Faceapi = require('../model/faceapiModel');
 exports.checkIn =asyncHandler( async (req,res) =>{
     const {name, check, time, date, lati, long, placedata} = req.body;
     const checked = new CheckIn({
@@ -51,3 +52,21 @@ exports.getAllUsersForOptions =asyncHandler( async (req, res)=>{
     // console.log(data);
     res.json(data);
 })
+
+exports.facedescriptor = async (req, res) => {
+    const {name, discriptor} = req.body
+    const discriptorArray = Object.values(discriptor)
+    const dis = new Faceapi({
+        name,
+        reviews:discriptor
+    })
+    const data = await dis.save()
+    res.json(data)
+
+}
+
+exports.faceApiDes = async (req, res) => {
+    const data = await Faceapi.find({})
+    res.json(data)
+
+}
